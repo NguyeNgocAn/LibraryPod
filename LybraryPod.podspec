@@ -19,19 +19,7 @@ Pod::Spec.new do |spec|
   # spec.screenshots  = "www.example.com/screenshots_1.gif", "www.example.com/screenshots_2.gif"
 
   # spec.license      = "MIT (example)"
-  spec.license      = { :type => "MIT", :file => "LICENSE" }
-
-
-  # ――― Author Metadata  ――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
-  #
-  #  Specify the authors of the library, with email addresses. Email addresses
-  #  of the authors are extracted from the SCM log. E.g. $ git log. CocoaPods also
-  #  accepts just a name if you'd rather not provide an email address.
-  #
-  #  Specify a social_media_url where others can refer to, for example a twitter
-  #  profile URL.
-  #
-
+  spec.license      = { :type => "MIT", :file => "LICENSE" }  
   spec.author             = { "NguyeNgocAn" => "an4217832831@gmail.com" }
   # Or just: spec.author    = "NguyeNgocAn"
   # spec.authors            = { "NguyeNgocAn" => "an4217832831@gmail.com" }
@@ -51,28 +39,14 @@ Pod::Spec.new do |spec|
   # spec.osx.deployment_target = "10.7"
   # spec.watchos.deployment_target = "2.0"
   # spec.tvos.deployment_target = "9.0"
+ 
+  spec.source       = { :http => "https://github.com/NguyeNgocAn/LibraryPod/LibraryPod-0.0.1.zip"}
 
-
-  # ――― Source Location ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
-  #
-  #  Specify the location from where the source should be retrieved.
-  #  Supports git, hg, bzr, svn and HTTP.
-  #
-
-  spec.source       = { :http => "https://github.com/NguyeNgocAn/LibraryPod.git"}
-
-
-  # ――― Source Code ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
-  #
-  #  CocoaPods is smart about how it includes source code. For source files
-  #  giving a folder will include any swift, h, m, mm, c & cpp files.
-  #  For header files it will include any header in the folder.
-  #  Not including the public_header_files will make all headers public.
-  #
-
-  spec.source_files  = "Classes", "Classes/**/*.{h,m}"
-  spec.exclude_files = "Classes/Exclude"
-
+  spec.preserve_paths       = 'Library.framework'
+  spec.vendored_frameworks  = 'Library.framework'
+  spec.public_header_files  = 'Library.framework/Versions/A/Headers/Library.h'
+  spec.source_files         = 'Library.framework/Versions/A/Headers/Library.h'
+  # spec.exclude_files = "Classes/Exclude"
   # spec.public_header_files = "Classes/**/*.h"
 
 
@@ -109,9 +83,13 @@ Pod::Spec.new do |spec|
   #  where they will only apply to your library. If you depend on other Podspecs
   #  you can include multiple dependencies to ensure it works.
 
-  # spec.requires_arc = true
+  spec.requires_arc = true
 
   # spec.xcconfig = { "HEADER_SEARCH_PATHS" => "$(SDKROOT)/usr/include/libxml2" }
   # spec.dependency "JSONKit", "~> 1.4"
+  spec.pod_target_xcconfig = {
+    'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'arm64'
+  }
+  spec.user_target_xcconfig = { 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'arm64' }
 
 end
